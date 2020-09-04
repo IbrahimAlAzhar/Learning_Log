@@ -1,0 +1,13 @@
+{% extends "learning_logs/base.html" %}
+
+{% block content %}
+ <p><a href="{% url 'topic' topic.id %}">{{ topic }}</a></p>
+<!--link with url name topic and pass the parameter use topic id -->
+   <p>Edit entry:</p>
+  <form action="{% url 'edit_entry' entry.id %}" method="post"> <!--using u r l name,edit is pass from view function and id is build in attribute of Entry model,,and this u r l parameter needs id -->
+      {% csrf_token %}
+      {{ form.as_p }}
+      <button name="submit">save changes</button>
+
+  </form>
+{% endblock content %}

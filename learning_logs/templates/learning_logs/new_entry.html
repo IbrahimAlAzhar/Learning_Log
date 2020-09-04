@@ -1,0 +1,13 @@
+{% extends "learning_logs/base.html" %}
+
+{% block content %}
+ <p><a href="{% url 'topic' topic.id %}">{{ topic }}</a></p> <!--link back to the main page for that topic -->
+  <!--here create a link of the topic using u r l name,and need topic.id which is use in urls.py file,'topic' is pass from view function using context dictionary,and 'id' is a build in attribute provide by django in 'Topic' model -->
+ <p>Add a new entry:</p>
+<form action="{% url 'new_entry' topic.id %}" method="post"> <!--using u r l name for from action which needs 'topic.id' -->
+    {% csrf_token %}
+    {{ form.as_p }}
+    <button name='submit'>add entry</button>
+
+</form>
+{% endblock content %}

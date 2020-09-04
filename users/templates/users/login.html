@@ -1,0 +1,26 @@
+{% extends "learning_logs/base.html" %}
+{% load bootstrap3 %}
+
+{% block header %}
+    <h2>Log in to your account.</h2>
+{% endblock header %}
+
+{% block content %}
+<!--a template in one app can extend a template from another app -->
+
+<!-- {% if form.errors %} --> <!--check form errors django build in -->
+<!-- <p>Your username and password didn't match. Please try again.</p>
+{% endif %}
+-->
+<!--django bootstrap3 manages form errors automatically -->
+<form method="post" action="{% url 'login' %}" class="form"> <!--we want the login view to process the form,so we set the action argument as the u r l of the login page -->
+    {% csrf_token %}
+    <!-- {{ form.as_p }} -->
+    {% bootstrap_form form %} <!--display the bootstrap form,this template tag inserts Bootstrap style rules  -->
+    {% buttons %} <!--add bootstrap3 template tag buttons which adds bootstrap styling in buttons -->
+        <button name="submit" class="btn btn-primary">log in</button>
+    {% endbuttons %}
+    <input type="hidden" name="next" value="{% url 'index' %}"> <!--this value argument tells django where to redirect the user after they've logged in successfully,here we send the usr to the home page, we can set this also in settings.py file using 'LOGIN REDIRECT URL = home' -->
+</form>
+
+{% endblock content %}

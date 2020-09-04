@@ -1,0 +1,33 @@
+{% extends 'learning_logs/base.html' %}
+
+{% block header %}
+   <h2>{{ topic }}</h2>
+{% endblock header %}
+
+{% block content %}
+    <p>
+        <a href="{% url 'new_entry' topic.id %}">add new entry</a> <!--'new_entry' is u r l name which needs topic.id parameter,topic is pass from view function and id is attribute of 'Topic' model -->
+    </p>
+    <ul>
+        {% for entry in entries %} <!--for all entries of this topic,value come from views.py file -->
+           <div class="panel panel-default"> <!--we create a panel div element which contains two more nested divs:a panel-heading div and a panel-body div -->
+               <div class="panel-heading"> <!--panel heading div contains the date for the entry and link to edit the entry -->
+                   <h3>
+                       {{ entry.date_field|date:'M d, Y H:i' }}  <!--this date_field attribute is the attribute of Entry model,using date filter in the format January 1,2015 23:00  -->
+                       <small> <!--make it little smaller than the timestamp -->
+                           <!--we include the edit link after each entry's date and text has been displayed,named url pattern 'edit_entry' along with the id attribute of the current entry -->
+                           <a href="{% url 'edit_entry' entry.id %}">edit entry</a> <!--using u r l name,edit is pass from view function and id is build in attribute of Entry model,,and this u r l parameter needs id -->
+                           <!--here 'entry' is variable,and id is build in attribute from Entry model,if we set the link outside the for loop then it can't work because it need 'entry' for each 'edit_entry' -->
+                       </small>
+                   </h3>
+               </div>
+               <div class="panel-body">
+                   {{ entry.text|linebreaks }} <!--text is the attribute of Entry model,here we use Entry model's attribute,display full value of text,using linebreaks filter -->
+               </div>
+           </div>
+
+        {% empty %} <!--if there are no entry -->
+              There are no entries for this topic yet.
+        {% endfor %}
+
+{% endblock content %}
